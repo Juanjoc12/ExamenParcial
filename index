@@ -1,0 +1,181 @@
+<html>
+	<head>
+	<script>
+function cualImagen( fila, col ){
+	var imagenes = [ 
+		"1.png",
+		"2.png",
+		"3.png",
+		"4.png",
+		"5.png",
+		"6.png",
+		"7.png",
+		"8.png",
+		"9.png",
+		"10.png"
+	];
+	var pos = (fila+1)*5 + col;
+	return "img/" + imagenes[ pos % 10 ];
+}
+
+ /*La propiedad target devuelve el elemento que desencadenó 
+			  el evento, junto con innerText retorna el texto del elemento*/
+		    function manejarEvento( ev ){
+		      console.log(ev.target.innerText);
+		      console.log(seleccionado);
+		      console.log(ficha);
+		      console.log(white);
+		      
+		      
+			    if(seleccionado){
+			      //Mover posición
+			      event.target.innerText = ficha.innerText;
+			      seleccionado = false;
+			      ficha.innerText = null;
+			      ficha.style.backgroundColor = color;
+			      
+			      
+			    }else{
+			      //seleccionar ficha
+			      seleccionado = true;
+			      ficha = ev.target;
+			      color = ficha.style.backgroundColor;
+			      ficha.style.backgroundColor = "green";
+			      
+			    }
+		    }
+
+//Esta funcion retorna la imagen de la carta en cierta posicion de la fila y de la columna
+function htmlCarta( fila, col ){
+	return '<div><img src="' + cualImagen(fila,col) + '" /></div>';
+}
+
+//Funcion que cuando es llamada genera la reparticion de las cartas en una tabla 5 x 4
+function repartir(){
+	var cartas="";
+	for( var fila = 0; fila <= 4; fila++){
+		for(col = 0; col <= 5; col++){
+			cartas += htmlCarta( fila, col );
+		}
+	}
+	
+	tab = document.getElementById("tablero");
+	tab.innerHTML = cartas;
+}	
+
+//Funcion que reinicia la partida
+function Replay(){
+  location.reload();
+}
+
+
+function Play(data)
+{
+  if (document.getElementById(data).className == "contenido")
+  {
+   document.getElementById(data).innerHTML = cualImagen(fila,col)
+   player = 2;
+   plays += 1;
+   whoWinstheGame();
+   }
+   else
+   {
+   document.getElementById(data).innerHTML = cualImagen(fila,col)
+   player = 1;
+   plays += 1;
+   whoWinstheGame(); 
+   }
+  }
+ }
+
+//funcion que me genera una alerta diciendo si gano o no
+var puntaje = 0;
+function whoWinstheGame()
+{
+ //check wins for player one 
+ if ((document.getElementById("box1").className == 'Equis' && document.getElementById("box2").className == 'Equis') 
+ || (document.getElementById("box1").className == 'Equis' && document.getElementById("box4").className == 'Equis') 
+ || (document.getElementById("box1").className == 'Equis' && document.getElementById("box5").className == 'Equis')
+ || (document.getElementById("box2").className == 'Equis' && document.getElementById("box5").className == 'Equis')
+ || (document.getElementById("box3").className == 'Equis' && document.getElementById("box6").className == 'Equis')
+ || (document.getElementById("box4").className == 'Equis' && document.getElementById("box5").className == 'Equis')
+ || (document.getElementById("box7").className == 'Equis' && document.getElementById("box8").className == 'Equis')
+ || (document.getElementById("box3").className == 'Equis' && document.getElementById("box5").className == 'Equis'))
+ {
+ 	puntaje = puntaje + 1;
+  window.alert("Jugador gano el juego");
+  Replay();
+}
+	
+	</script>
+	<style>
+#tablero img
+{
+	visibility: hidden;
+}	
+
+#tablero div
+{
+	background-color: white;
+	padding: 4px;
+	border-width: 5px;
+	margin: 8px;
+}
+
+div{
+		border-radius: 5px;
+	}
+	.contenedor{
+		background-color:#CCC;
+		width:39%;
+		height:100px;
+	}
+	.contenido{
+		height:80px;
+		width:80px;
+		float:left;
+		margin: 10px;
+	}
+
+	.div span{width: 100%;display: block;text-align: center; font-family: sans-serif;color: #fff;font-size: 25px;background: #446CB3;}
+	button{background: #26C281;color: #fff;font-weight: bold;border: 2px solid yellow;cursor: pointer;width: 265px;height: 40px;font-size: 22px;display: left;margin: 10px auto}
+
+	</style>
+	</head>
+	<body>
+	<div id="tablero" onclick="htmlCarta(fila,col)" onclick="cualImagen(fila,col)" onclick = "manejarEvento(event)">
+		<span id="turn">----------------------------------------Juego de Memoria---------------------------------------</span>
+		<div class="contenedor">
+			<div class="contenido" style="background-color:indigo;" onClick="cualImagen('fila', 'col')" onClick="htmlCarta('fila','col')" ></div>
+			<div class="contenido" style="background-color:indigo;" onClick="Play1('box1')" onClick="Play2('box1')"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+		</div>
+		<div class="contenedor">
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+		</div>
+	    <div class="contenedor">
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+		</div>
+		<div class="contenedor">
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+			<div class="contenido" style="background-color:indigo;"></div>
+		</div>
+	</div>
+	<button type="button" onclick="repartir()">Repartir</button>
+	<button type="button" onClick="Replay()">Reiniciar</button>
+	<div id="puntaje">Su puntaje es: 0</div>
+	</body>
+</html>
